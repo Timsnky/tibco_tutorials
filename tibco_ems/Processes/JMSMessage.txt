@@ -1,0 +1,2 @@
+JMS Message: Hello World. This is a message to queue.sample via JMS
+JMS Message: Hello World. This is a message to queue.sample via JMS
