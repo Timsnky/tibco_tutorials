@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.example.com/1578470940686" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" xmlns:ns0="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd3" xmlns:ns1="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd4" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1578470940686">
+    <wsdl:types>
+        <xs:schema xmlns="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd3" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd3" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="CalculatorRequestInputs">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:FirstNumber"/>
+                        <xs:element ref="ns0:SecondNumber"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="FirstNumber" type="xs:double"/>
+            <xs:element name="SecondNumber" type="xs:double"/>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd4" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd4" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="CalculatorOutputResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns1:Sum"/>
+                        <xs:element ref="ns1:Difference"/>
+                        <xs:element ref="ns1:Product"/>
+                        <xs:element ref="ns1:Division"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Difference" type="xs:double"/>
+            <xs:element name="Division" type="xs:double"/>
+            <xs:element name="Product" type="xs:double"/>
+            <xs:element name="Sum" type="xs:double"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="CalculatorJMSWebService">
+        <wsdl:port name="CalculatorPortTypeEndpoint1" binding="tns:CalculatorPortTypeEndpoint1Binding">
+            <soap:address location=""/>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">queue.sample</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="CalculatorPortType">
+        <wsdl:operation name="GetCalculations">
+            <wsdl:input message="tns:CalculatorInputRequest"/>
+            <wsdl:output message="tns:CalculatorOutputResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CalculatorPortTypeEndpoint1Binding" type="tns:CalculatorPortType">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="bytes"/>
+        <wsdl:operation name="GetCalculations">
+            <soap:operation style="document" soapAction="/Services/CalculatorWSDL-service1.serviceagent/CalculatorPortTypeEndpoint1/GetCalculations"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="CalculatorInputRequest">
+        <wsdl:part name="Request" element="ns0:CalculatorRequestInputs"/>
+    </wsdl:message>
+    <wsdl:message name="CalculatorOutputResponse">
+        <wsdl:part name="Response" element="ns1:CalculatorOutputResponse"/>
+    </wsdl:message>
+</wsdl:definitions>

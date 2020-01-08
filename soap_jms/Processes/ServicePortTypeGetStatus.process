@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd" xmlns:wsdlPfx="http://xmlns.example.com/1578465765738" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd2">
+    <wsdl:import namespace="http://xmlns.example.com/1578465765738" location="/WSDL/WSDL.wsdl"/>
+    <pd:name>Processes/ServicePortTypeGetStatus.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="wsdlPfx:RequestMessage"/>
+    <pd:startX>27</pd:startX>
+    <pd:startY>152</pd:startY>
+    <pd:returnBindings>
+        <wsdlPfx:ResponseMessage>
+            <Response>
+                <ns2:ResponseBody>
+                    <ns2:Message>
+                        <xsl:value-of select="$MapData/MapperMessage"/>
+                    </ns2:Message>
+                </ns2:ResponseBody>
+            </Response>
+        </wsdlPfx:ResponseMessage>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="wsdlPfx:ResponseMessage"/>
+    <pd:endX>465</pd:endX>
+    <pd:endY>150</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1578466163060</pd:targetNamespace>
+    <pd:activity name="MapData">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>246</pd:x>
+        <pd:y>151</pd:y>
+        <config>
+            <element>
+                <xsd:element name="MapperMessage" type="xsd:string"/>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <MapperMessage>
+                <xsl:value-of select="if ($Start/wsdlPfx:RequestMessage/Request/ns:RequestBody/ns:Age > 18)&#xA; then&#xA;&quot;You are eligible&quot;&#xA;else&#xA;&quot;You are not eligible&quot;"/>
+            </MapperMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>MapData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>MapData</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

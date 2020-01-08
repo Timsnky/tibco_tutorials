@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd4" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd3" xmlns:wsdlPfx="http://xmlns.example.com/1578470743754" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd4" schemaLocation="/Schemas/CalculatorOuputs.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1578470743754" location="/WSDL/CalculatorWSDL.wsdl"/>
+    <pd:name>Processes/CalculatorPortTypeGetCalculations.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="wsdlPfx:CalculatorInputRequest"/>
+    <pd:startX>27</pd:startX>
+    <pd:startY>118</pd:startY>
+    <pd:returnBindings>
+        <wsdlPfx:CalculatorOutputResponse>
+            <Response>
+                <pfx:CalculatorOutputResponse>
+                    <pfx:Sum>
+                        <xsl:value-of select="$MapData/pfx:CalculatorOutputResponse/pfx:Sum"/>
+                    </pfx:Sum>
+                    <pfx:Difference>
+                        <xsl:value-of select="$MapData/pfx:CalculatorOutputResponse/pfx:Difference"/>
+                    </pfx:Difference>
+                    <pfx:Product>
+                        <xsl:value-of select="$MapData/pfx:CalculatorOutputResponse/pfx:Product"/>
+                    </pfx:Product>
+                    <pfx:Division>
+                        <xsl:value-of select="$MapData/pfx:CalculatorOutputResponse/pfx:Division"/>
+                    </pfx:Division>
+                </pfx:CalculatorOutputResponse>
+            </Response>
+        </wsdlPfx:CalculatorOutputResponse>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="wsdlPfx:CalculatorOutputResponse"/>
+    <pd:endX>561</pd:endX>
+    <pd:endY>118</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1578470940705</pd:targetNamespace>
+    <pd:activity name="MapData">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>281</pd:x>
+        <pd:y>118</pd:y>
+        <config>
+            <element ref="pfx:CalculatorOutputResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx:CalculatorOutputResponse>
+                <pfx:Sum>
+                    <xsl:value-of select="$Start/wsdlPfx:CalculatorInputRequest/Request/ns:CalculatorRequestInputs/ns:FirstNumber + $Start/wsdlPfx:CalculatorInputRequest/Request/ns:CalculatorRequestInputs/ns:SecondNumber"/>
+                </pfx:Sum>
+                <pfx:Difference>
+                    <xsl:value-of select="$Start/wsdlPfx:CalculatorInputRequest/Request/ns:CalculatorRequestInputs/ns:FirstNumber - $Start/wsdlPfx:CalculatorInputRequest/Request/ns:CalculatorRequestInputs/ns:SecondNumber"/>
+                </pfx:Difference>
+                <pfx:Product>
+                    <xsl:value-of select="$Start/wsdlPfx:CalculatorInputRequest/Request/ns:CalculatorRequestInputs/ns:FirstNumber * $Start/wsdlPfx:CalculatorInputRequest/Request/ns:CalculatorRequestInputs/ns:SecondNumber"/>
+                </pfx:Product>
+                <pfx:Division>
+                    <xsl:value-of select="$Start/wsdlPfx:CalculatorInputRequest/Request/ns:CalculatorRequestInputs/ns:FirstNumber div $Start/wsdlPfx:CalculatorInputRequest/Request/ns:CalculatorRequestInputs/ns:SecondNumber"/>
+                </pfx:Division>
+            </pfx:CalculatorOutputResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>MapData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>MapData</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

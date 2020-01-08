@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.example.com/1578466162955" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" xmlns:ns0="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd" xmlns:ns1="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd2" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1578466162955">
+    <wsdl:types>
+        <xs:schema xmlns="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd2" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="Message" type="xs:string"/>
+            <xs:element name="ResponseBody">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns1:Message"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="Age" type="xs:int"/>
+            <xs:element name="RequestBody">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="ns0:Age"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="SOAPJMSWebService">
+        <wsdl:port name="ServicePortTypeEndpoint0" binding="tns:ServicePortTypeEndpoint0Binding">
+            <soap:address location=""/>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">queue.sample</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="ServicePortType">
+        <wsdl:operation name="GetStatus">
+            <wsdl:input message="tns:RequestMessage"/>
+            <wsdl:output message="tns:ResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ServicePortTypeEndpoint0Binding" type="tns:ServicePortType">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="bytes"/>
+        <wsdl:operation name="GetStatus">
+            <soap:operation style="document" soapAction="/Services/WSDL-service0.serviceagent/ServicePortTypeEndpoint0/GetStatus"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="Request"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="Response"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="RequestMessage">
+        <wsdl:part name="Request" element="ns0:RequestBody"/>
+    </wsdl:message>
+    <wsdl:message name="ResponseMessage">
+        <wsdl:part name="Response" element="ns1:ResponseBody"/>
+    </wsdl:message>
+</wsdl:definitions>

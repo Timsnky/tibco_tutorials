@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd4"
+	 targetNamespace="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd4"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="CalculatorOutputResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Sum"/>
+				<xs:element ref="Difference"/>
+				<xs:element ref="Product"/>
+				<xs:element ref="Division"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Sum" type="xs:double"/>
+	<xs:element name="Product" type="xs:double"/>
+	<xs:element name="Division" type="xs:double"/>
+	<xs:element name="Difference" type="xs:double"/>
+</xs:schema>

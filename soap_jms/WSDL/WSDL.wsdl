@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd" xmlns:tns="http://xmlns.example.com/1578465765738" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd2" targetNamespace="http://xmlns.example.com/1578465765738">
+    <import namespace="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd" location="../Schemas/RequestSchema.xsd"/>
+    <import namespace="http://www.tibco.com/schemas/soap_jms/Schemas/Schema.xsd2" location="../Schemas/ResponseSchema.xsd"/>
+    <message name="RequestMessage">
+        <part name="Request" element="ns:RequestBody"/>
+    </message>
+    <message name="ResponseMessage">
+        <part name="Response" element="ns2:ResponseBody"/>
+    </message>
+    <portType name="ServicePortType">
+        <operation name="GetStatus">
+            <input message="tns:RequestMessage"/>
+            <output message="tns:ResponseMessage"/>
+        </operation>
+    </portType>
+</definitions>
